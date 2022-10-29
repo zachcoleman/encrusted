@@ -29,7 +29,11 @@ dependencies = [
 repository = "https://github.com/zachcoleman/encrusted"
 
 [project.optional-dependencies]
-test = []
+test = [
+  "dictdiffer",
+  "pytest",
+  "pytest-cov[all]"
+]
 
 [build-system]
 requires = ["maturin>=0.13,<0.14"]
