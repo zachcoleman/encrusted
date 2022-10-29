@@ -5,6 +5,8 @@ on:
     types:
       - closed
 
+
+
 jobs:
 
   linux:
@@ -16,11 +18,20 @@ jobs:
       with:
         python-version: 3.9
         architecture: x64
+    - uses: actions-rs/toolchain@v1
+      with:
+        toolchain: stable
+        profile: minimal
+        default: true
     - uses: messense/maturin-action@v1
       with:
         manylinux: auto
         command: build
-        args: --release -o dist
+        args: --release --out dist
+    - name: Install built wheel
+      run: |
+        pip install encrusted --no-index --find-links dist --force-reinstall
+        python -c "import encrusted"
     - name: Upload wheels
       uses: actions/upload-artifact@v3
       with:
@@ -36,10 +47,19 @@ jobs:
       with:
         python-version: 3.9
         architecture: x64
+    - uses: actions-rs/toolchain@v1
+      with:
+        toolchain: stable
+        profile: minimal
+        default: true
     - uses: messense/maturin-action@v1
       with:
         command: build
-        args: --release --no-sdist -o dist
+        args: --release --out dist
+    - name: Install built wheel
+      run: |
+        pip install encrusted --no-index --find-links dist --force-reinstall
+        python -c "import encrusted"
     - name: Upload wheels
       uses: actions/upload-artifact@v3
       with:
@@ -58,7 +78,11 @@ jobs:
     - uses: messense/maturin-action@v1
       with:
         command: build
-        args: --release --no-sdist -o dist --universal2
+        args:  --release --universal2 --out dist
+    - name: Install built wheel
+      run: |
+        pip install encrusted --no-index --find-links dist --force-reinstall
+        python -c "import encrusted"
     - name: Upload wheels
       uses: actions/upload-artifact@v3
       with:
