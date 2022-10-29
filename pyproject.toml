@@ -1,0 +1,43 @@
+[project]
+name = "encrusted"
+version = "0.1.0"
+description = "A library for fast encoding of numpy arrays"
+readme = "README.md"
+license = {text="Apache 2.0"}
+keywords = ["numpy", "rust", "encoding"]
+authors = [
+  {email = "zacharywcoleman@gmail.com"},
+  {name = "Zach Coleman"}
+]
+homepage = "https://github.com/zachcoleman/encrusted"
+repository = "https://github.com/zachcoleman/encrusted"
+requires-python = ">=3.7"
+classifiers = [
+    "Programming Language :: Rust",
+    "Programming Language :: Python :: Implementation :: CPython",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+]
+dependencies = [
+  "numpy",
+]
+
+[project.urls]
+repository = "https://github.com/zachcoleman/encrusted"
+
+[project.optional-dependencies]
+test = []
+
+[build-system]
+requires = ["maturin>=0.13,<0.14"]
+build-backend = "maturin"
+
+[tool.maturin]
+bindings = "pyo3"
+strip = true
+
+[tool.isort]
+profile="black"
