@@ -20,8 +20,7 @@ jobs:
       with:
         manylinux: auto
         command: build
-        args: --release --out dist
-        maturin-release: "v0.13.0"
+        args: --release --out dist --find-interpreter
     - name: Install built wheel
       run: |
         pip install encrusted --find-links dist --force-reinstall
