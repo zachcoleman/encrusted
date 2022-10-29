@@ -12,19 +12,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
-    - uses: actions/setup-python@v4
-      with:
-        python-version: 3.9
-        architecture: x64
     - uses: messense/maturin-action@v1
       with:
         manylinux: auto
         command: build
         args: --release --out dist --find-interpreter
-    - name: Install built wheel
-      run: |
-        pip install encrusted --find-links dist --force-reinstall
-        python -c "import encrusted"
     - name: Upload wheels
       uses: actions/upload-artifact@v3
       with:
@@ -36,23 +28,10 @@ jobs:
     runs-on: windows-latest
     steps:
     - uses: actions/checkout@v3
-    - uses: actions/setup-python@v4
-      with:
-        python-version: 3.9
-        architecture: x64
-    - uses: actions-rs/toolchain@v1
-      with:
-        toolchain: stable
-        profile: minimal
-        default: true
     - uses: messense/maturin-action@v1
       with:
         command: build
-        args: --release --out dist
-    - name: Install built wheel
-      run: |
-        pip install encrusted --find-links dist --force-reinstall
-        python -c "import encrusted"
+        args: --release --out dist --find-interpreter
     - name: Upload wheels
       uses: actions/upload-artifact@v3
       with:
@@ -64,18 +43,10 @@ jobs:
     runs-on: macos-latest
     steps:
     - uses: actions/checkout@v3
-    - uses: actions/setup-python@v4
-      with:
-        python-version: 3.9
-        architecture: x64
     - uses: messense/maturin-action@v1
       with:
         command: build
-        args:  --release --universal2 --out dist
-    - name: Install built wheel
-      run: |
-        pip install encrusted --find-links dist --force-reinstall
-        python -c "import encrusted"
+        args:  --release --universal2 --out dist --find-interpreter
     - name: Upload wheels
       uses: actions/upload-artifact@v3
       with:
