@@ -8,8 +8,13 @@ edition = "2021"
 name = "encrusted"
 crate-type = ["cdylib"]
 
+[package.metadata.maturin]
+name = "encrusted._encrusted_ext"
+
 [dependencies]
 pyo3 = { version = "0.17.1", features = ["extension-module"] }
 numpy = "0.17.2"
 ndarray = {version = "0.15.6", features = ["serde"]}
 bincode = "1.3.3"
+base64 = "0.13.1"
+serde = "1.0.147"
