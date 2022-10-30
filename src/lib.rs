@@ -1,31 +1,26 @@
-use numpy::*;
 use pyo3::prelude::*;
-use pyo3::types::PyBytes;
 
-// old JSON serde (slow)
-// #[pyfunction]
-// fn encode_mask(_py: Python, arr: PyReadonlyArray2<u8>) -> String{
-//     json!({
-//         "mask": arr.to_owned_array()
-//     }).to_string()
-// }
-
-#[pyfunction]
-fn encode_mask(py: Python, arr: PyReadonlyArray2<u8>) -> PyObject {
-    let bytes = bincode::serialize(&arr.to_owned_array()).unwrap();
-    PyBytes::new(py, &bytes).into()
-}
-
-#[pyfunction]
-fn decode_mask<'a>(py: Python<'a>, bytes: &'a PyAny) -> PyResult<&'a PyArray2<u8>> {
-    let bytes: Vec<u8> = bytes.extract::<Vec<u8>>().unwrap();
-    let arr: ndarray::Array2<u8> = bincode::deserialize(&bytes).unwrap();
-    Ok(PyArray2::from_array(py, &arr))
-}
+mod encode;
+mod decode;
+mod dispatch;
 
 #[pymodule]
-fn encrusted(_py: Python, m: &PyModule) -> PyResult<()> {
-    m.add_function(wrap_pyfunction!(encode_mask, m)?)?;
-    m.add_function(wrap_pyfunction!(decode_mask, m)?)?;
+fn _encrusted_ext(_py: Python, m: &PyModule) -> PyResult<()> {
+    // encode can dispatch to one type
+    m.add_function(wrap_pyfunction!(encode::py_encode_mask, m)?)?;
+
+    // export all the decodes
+    m.add_function(wrap_pyfunction!(decode::py_decode_mask_bool, m)?)?;
+    m.add_function(wrap_pyfunction!(decode::py_decode_mask_u8, m)?)?;
+    m.add_function(wrap_pyfunction!(decode::py_decode_mask_u16, m)?)?;
+    m.add_function(wrap_pyfunction!(decode::py_decode_mask_u32, m)?)?;
+    m.add_function(wrap_pyfunction!(decode::py_decode_mask_u64, m)?)?;
+    m.add_function(wrap_pyfunction!(decode::py_decode_mask_i8, m)?)?;
+    m.add_function(wrap_pyfunction!(decode::py_decode_mask_i16, m)?)?;
+    m.add_function(wrap_pyfunction!(decode::py_decode_mask_i32, m)?)?;
+    m.add_function(wrap_pyfunction!(decode::py_decode_mask_i64, m)?)?;
+    m.add_function(wrap_pyfunction!(decode::py_decode_mask_f32, m)?)?;
+    m.add_function(wrap_pyfunction!(decode::py_decode_mask_f64, m)?)?;
+
     Ok(())
 }
