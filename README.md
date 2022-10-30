@@ -15,7 +15,7 @@ pip install encrusted
 Build from source:
 ```
 maturin build -r -i=path/to/python
-pip install .../fast-stats/target/wheels/<whl file name>.whl
+pip install .../encrusted/target/wheels/<whl file name>.whl
 ```
 
 ## Running Tests
