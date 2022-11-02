@@ -1,19 +1,26 @@
 use numpy::*;
 use pyo3::prelude::*;
 
-use crate::numpy_dispatch;
+use flate2::write::DeflateEncoder;
+use flate2::Compression;
+use std::io::prelude::*;
 
-#[pyfunction]
-#[pyo3(name = "_encode_mask")]
-#[pyo3(text_signature = "(arr: np.ndarray, /)")]
-pub fn py_encode_mask<'a>(py: Python<'a>, arr: &'a PyAny) -> PyResult<String> {
-    numpy_dispatch!(py, encode_mask, PyResult<String>, arr)
-}
+use crate::make_encode_fns;
+use crate::make_py_encode_fns;
+use crate::numpy_dispatch_x1;
+use crate::numpy_dispatch_x2;
+use crate::numpy_dispatch_x3;
+use crate::numpy_dispatch_x4;
+use crate::numpy_dispatch_xd;
 
-fn encode_mask<T>(_py: Python, arr: PyReadonlyArray2<T>) -> PyResult<String>
-where
-    T: Copy + Clone + numpy::Element + serde::ser::Serialize,
-{
-    let bytes = bincode::serialize(&arr.to_owned_array()).unwrap();
-    Ok(base64::encode(bytes))
-}
+make_encode_fns!(encode_dyn, PyReadonlyArrayDyn);
+make_encode_fns!(encode_1, PyReadonlyArray1);
+make_encode_fns!(encode_2, PyReadonlyArray2);
+make_encode_fns!(encode_3, PyReadonlyArray3);
+make_encode_fns!(encode_4, PyReadonlyArray4);
+
+make_py_encode_fns!(encode_dyn, xd, PyReadonlyArrayDyn);
+make_py_encode_fns!(encode_1, x1, PyReadonlyArray1);
+make_py_encode_fns!(encode_2, x2, PyReadonlyArray2);
+make_py_encode_fns!(encode_3, x3, PyReadonlyArray3);
+make_py_encode_fns!(encode_4, x4, PyReadonlyArray4);
