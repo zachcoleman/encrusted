@@ -20,7 +20,7 @@ where
 {
     let bytes = bincode::serialize(&arr.to_owned_array()).unwrap();
     let mut e = DeflateEncoder::new(Vec::new(), Compression::fast());
-    e.write_all(&bytes[..]).unwrap(); 
+    e.write_all(&bytes[..]).unwrap();
     Ok(base64::encode(e.finish().unwrap()))
     // Ok(base64::encode(bytes))
 }
