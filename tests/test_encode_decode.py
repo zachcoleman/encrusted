@@ -1,4 +1,5 @@
 import numpy as np
+import pytest
 
 from encrusted import decode, encode
 
@@ -33,3 +34,8 @@ def test_encode_decode():
                 assert np.array_equal(
                     decode(encode(arr, c)), arr
                 ), f"failed on: size: {s} type: {t} compression: {c}"
+
+
+def test_bad_type():
+    with pytest.raises(TypeError):
+        decode(encode(np.array([]).astype(np.complex128)))

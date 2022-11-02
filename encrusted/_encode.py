@@ -67,4 +67,4 @@ def encode(arr: np.ndarray, compressed: bool = True) -> str:
             f"{compressed_byte}{dim_byte}{DTYPE_TO_HEADER.get(arr.dtype):02}"
             + encode_fn(compressed, arr)
         )
-    raise ValueError(f"unsupported dtype for arr: {arr.dtype}")
+    raise TypeError(f"unsupported dtype for arr: {arr.dtype}")
