@@ -18,5 +18,16 @@ maturin build -r -i=path/to/python
 pip install .../encrusted/target/wheels/<whl file name>.whl
 ```
 
+## Usage
+```python
+import numpy as np
+import encrusted
+
+arr = np.random.randint(0, 1, size=(100, 100))
+encoded_arr = encrusted.encode(arr)
+assert np.array_equal(encrusted.decode(encoded_arr), arr)
+```
+
+
 ## Running Tests
 Tests are run with `pytest`.
