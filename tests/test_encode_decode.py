@@ -27,10 +27,14 @@ COMPRESSED = [False, True]
 
 
 def test_encode_decode():
+    a, b = 0.0, 2 + 1e-16
     for s in SIZES:
         for t in TYPES:
             for c in COMPRESSED:
-                arr = np.random.random(s).astype(t)
+                if t == bool:
+                    arr = np.random.randint(0, 2, s).astype(t)
+                else:
+                    arr = np.random.uniform(a, b, s).astype(t)
                 assert np.array_equal(
                     decode(encode(arr, c)), arr
                 ), f"failed on: size: {s} type: {t} compression: {c}"
