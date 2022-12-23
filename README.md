@@ -1,4 +1,4 @@
-![GitHub Workflow Status (branch)](https://img.shields.io/github/workflow/status/zachcoleman/encrusted/tests/main)
+![GitHub Workflow Status (branch)](https://img.shields.io/github/actions/workflow/status/zachcoleman/encrusted/tests.yml?branch=main)
 ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/encrusted)
 ![PyPI - Wheel](https://img.shields.io/pypi/wheel/encrusted)
 [![License](https://img.shields.io/badge/license-Apache2.0-green)](./LICENSE)
