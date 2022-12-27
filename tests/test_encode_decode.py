@@ -43,3 +43,8 @@ def test_encode_decode():
 def test_bad_type():
     with pytest.raises(TypeError):
         decode(encode(np.array([]).astype(np.complex128)))
+
+
+def test_bad_header():
+    with pytest.raises(TypeError):
+        decode(b"0000")
