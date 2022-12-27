@@ -168,7 +168,7 @@ def decode(byte_str: str) -> np.ndarray:
     compressed = byte_str[0] == "1"
     dim_key = int(byte_str[1])
     dtype_key = int(byte_str[2:4])
-    decode_fn = SHAPE_TO_MAPPING.get(dim_key, {}).get(dtype_key, False)
+    decode_fn = SHAPE_TO_MAPPING.get(dim_key, {}).get(dtype_key)
     if decode_fn:
         return decode_fn(compressed, byte_str[4:])
     raise TypeError(f"invalid headers {byte_str[:4]}")

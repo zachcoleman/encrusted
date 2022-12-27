@@ -1,6 +1,6 @@
 [project]
 name = "encrusted"
-version = "1.0.0"
+version = "1.0.1"
 description = "A library for fast encoding of numpy arrays"
 readme = "README.md"
 license = {text="Apache 2.0"}
@@ -29,7 +29,8 @@ dependencies = [
 repository = "https://github.com/zachcoleman/encrusted"
 
 [project.optional-dependencies]
-test = [
+dev = [
+  "pre-commit",
   "pytest",
   "pytest-cov[all]"
 ]
@@ -44,3 +45,6 @@ strip = true
 
 [tool.isort]
 profile="black"
+
+[tool.bandit]
+exclude_dirs=["tests"]
